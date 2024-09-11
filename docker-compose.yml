@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: library
+      POSTGRES_USER: skillyboy
+      POSTGRES_PASSWORD: skilly1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_DB=library
+      - POSTGRES_USER=skillyboy
+      - POSTGRES_PASSWORD=skilly1234
+      - DB_HOST=localhost
+      - DB_PORT=5432
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

@@ -1,77 +1,12 @@
 http://localhost:8000/api/docs
-http://localhost:8000/admin
 
+ADMIN :
+http://localhost:8000/admin
+``Email:skillyboy@gmail.com``
+``Pass: skilly1234``
 
 CHECK OUT MY TASK HERE
 
-
-
-
-
-
-### **Table of Contents**
-1. [Introduction](#introduction)
-2. [Installation and Setup](#installation-and-setup)
-3. [API Endpoints](#api-endpoints)
-   - Frontend API
-   - Backend/Admin API
-4. [Authentication](#authentication)
-5. [Database Structure](#database-structure)
-6. [Caching and Redis](#caching-and-redis)
-7. [Testing](#testing)
-8. [Deployment (Docker)](#deployment-docker)
-9. [Future Scalability](#future-scalability)
-10. [Contributing](#contributing)
-
----
-
-### **1. Introduction**
-
-The Library Management API is a backend service designed to manage a library system where users can browse, borrow, and return books. The system also includes an admin interface for managing books, users, and borrow records.
-
-This project is built using **Django**, with **PostgreSQL** as the primary database and **NinjaAPI** as the framework to handle REST API requests. Redis is used for caching and background job processing.
-
----
-
-### **2. Installation and Setup**
-
-#### **Prerequisites:**
-- Python 3.10+
-- PostgreSQL 13 or later
-- Docker (Optional but recommended for deployment)
-
-#### **Steps to Set Up Locally:**
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/library-management-api.git
-    ```
-2. Create a virtual environment:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-3. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4. Set up PostgreSQL and create a new database:
-    ```sql
-    CREATE DATABASE library_db;
-    CREATE USER library_user WITH PASSWORD 'yourpassword';
-    GRANT ALL PRIVILEGES ON DATABASE library_db TO library_user;
-    ```
-5. Run migrations:
-    ```bash
-    python manage.py migrate
-    ```
-6. Create a superuser to access the admin panel:
-    ```bash
-    python manage.py createsuperuser
-    ```
-7. Run the server:
-    ```bash
-    python manage.py runserver
-    ```
 
 ---
 

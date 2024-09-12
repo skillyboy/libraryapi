@@ -6,14 +6,14 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Set work directory
-WORKDIR /books
+WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt /books/
+COPY requirements.txt /app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy project
-COPY . /books/
+COPY . /app/
 
 # Expose the port
 EXPOSE 8000

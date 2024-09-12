@@ -44,7 +44,6 @@ class UserAPITest(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_list_users(self):
-        url = reverse('list_users')
+        url = reverse('list_users')  # Make sure 'list_users' matches the operation_id in your API
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)

@@ -40,10 +40,11 @@ def enroll_user(request, data: UserSchema):
         return "User already exists!"
 
 # List all users enrolled in the library
-@api.get("/users/", response=List[UserSchema])
+@api.get("/users/", response=List[UserSchema], operation_id="list_users")
 def list_users(request):
     users = User.objects.all()
     return users
+
 
 @api.get("/books/", response=List[BookSchema])
 def list_books(request, publisher: Optional[str] = None, category: Optional[str] = None):

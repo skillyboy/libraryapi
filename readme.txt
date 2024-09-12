@@ -1,9 +1,9 @@
+USER:
 http://localhost:8000/api/docs
 
 ADMIN :
 http://localhost:8000/admin
-``Email:skillyboy@gmail.com``
-``Pass: skilly1234``
+
 ===================================================
 CHECK OUT MY TASK HERE
 ---

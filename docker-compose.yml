@@ -1,15 +1,12 @@
-version: "3.10"
 services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_DB: librarydb
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: skilly1234
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
   web:
     build: .
@@ -20,6 +17,3 @@ services:
       - "8000:8000"
     depends_on:
       - db
-
-volumes:
-  postgres_data:

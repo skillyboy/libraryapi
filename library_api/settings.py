@@ -84,10 +84,10 @@ WSGI_APPLICATION = "library_api.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'librarydb'),
+        'NAME': os.getenv('POSTGRES_DB', 'postgres'),
         'USER': os.getenv('POSTGRES_USER', 'postgres'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'skilly1234'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),  # 'db' is the service name from docker-compose.yml
+        'HOST': os.getenv('DB_HOST', 'db'),  # 'db' is the service name from docker-compose.yml
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }

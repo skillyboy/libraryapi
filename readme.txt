@@ -1,20 +1,49 @@
-USER:
-http://localhost:8000/api/docs
+Here's the updated README reflecting your current setup with PostgreSQL, Docker, and Django Admin for performing CRUD operations.
 
-ADMIN :
-http://localhost:8000/admin
-
-docker-compose up --build
-docker-compose exec web python manage.py createsuperuser
-docker-compose exec web python manage.py runserver 0.0.0.0:8000
-
-===================================================
-CHECK OUT MY TASK HERE
 ---
 
-### **3. API Endpoints**
+# Library API
 
-#### **Frontend API:**
+This project is a Library Management System that allows users to enroll in the library, borrow books, and view available books. Admins can perform CRUD operations via the Django Admin interface, and the entire project is dockerized for easy deployment.
+
+## **1. Project Overview**
+
+This API provides two sets of operations:
+- **Frontend API:** For users to enroll, view books, and borrow books.
+- **Backend/Admin API:** For admins to manage the library's catalog, users, and borrowing records via the Django Admin panel.
+
+## **2. Running the Project**
+
+To get the project up and running locally:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/skillyboy/libraryapi.git
+   cd libraryapi
+   ```
+
+2. **Run the project using Docker Compose:**
+
+   ```bash
+   docker-compose up --build
+   ```
+
+3. **Create an admin user:**
+
+   ```bash
+   docker-compose exec web python manage.py createsuperuser
+   ```
+
+4. **Access the application:**
+   - User API Docs: `http://localhost:8000/api/docs`
+   - Admin Dashboard: `http://localhost:8000/admin`
+
+---
+
+## **3. API Endpoints**
+
+### **Frontend API:**
 
 | Endpoint              | Method | Description                                      | Auth  |
 |-----------------------|--------|--------------------------------------------------|-------|
@@ -26,49 +55,49 @@ CHECK OUT MY TASK HERE
 | `/api/borrowed-books/` | GET    | List all borrowed books                          | No    |
 | `/api/unavailable-books/` | GET | List books not available for borrowing (with return dates) | No |
 
-#### **Backend/Admin API:**
+### **Backend/Admin API:**
 
-| Endpoint                 | Method | Description                                     | Auth  |
-|--------------------------|--------|-------------------------------------------------|-------|
-| `/admin/books/`           | POST   | Add a new book to the catalog                   | Yes   |
-| `/admin/books/{id}/`      | DELETE | Remove a book from the catalog                  | Yes   |
-| `/admin/users/`           | GET    | List all users enrolled in the library          | Yes   |
-| `/admin/borrowed-books/`  | GET    | List all users and the books they borrowed      | Yes   |
-| `/admin/unavailable-books/` | GET  | List unavailable books showing return dates     | Yes   |
+Backend/Admin API:
+
+/admin/books/book/	POST	Add a new book to the catalog	Yes
+/admin/books/book/{id}/delete/	DELETE	Remove a book from the catalog	Yes
+/admin/books/user/	GET	List all users enrolled in the library	Yes
+/admin/books/borrowing/	GET	List all users and the books they borrowed	Yes
+/admin/books/	GET	List unavailable books showing return dates	Yes
+
+
+## **4. Admin Access**
+
+For all admin-related operations, the Django Admin interface is used. Admin authentication is handled via Django's default login system.
+
+- **Admin Login:** `http://localhost:8000/admin`
+- **Admin Operations:** Create, update, and delete books, manage users, and monitor borrowed books via the admin panel.
 
 ---
 
-### **4. Authentication**
+## **5. Database Structure**
 
-Currently, the endpoints do not require authentication for frontend operations. However, for admin-related operations, authentication is required. Admins can log in via Django’s built-in authentication system.
+The project uses **PostgreSQL** as the database. Below is a high-level overview of the database models:
 
-- **Admin Authentication:** Admin authentication is handled via Django's default authentication system (`/admin/login/`).
-
----
-
-### **5. Database Structure**
-
-The project uses PostgreSQL for the database. Below is a high-level overview of the database models:
-
-#### **Publisher**
+### **Publisher**
 - `name`: The name of the publisher.
 
-#### **Category**
+### **Category**
 - `name`: The name of the category (e.g., Fiction, Technology).
 
-#### **Book**
+### **Book**
 - `title`: Title of the book.
 - `publisher`: ForeignKey to the `Publisher` model.
 - `category`: ForeignKey to the `Category` model.
 - `available`: Boolean indicating if the book is available for borrowing.
 - `return_date`: The date when the book will be available again (if borrowed).
 
-#### **User**
+### **User**
 - `email`: The user's email address.
 - `first_name`: The user's first name.
 - `last_name`: The user's last name.
 
-#### **Borrowing**
+### **Borrowing**
 - `user`: ForeignKey to the `User` model.
 - `book`: ForeignKey to the `Book` model.
 - `borrowed_on`: Date when the book was borrowed.
@@ -76,41 +105,26 @@ The project uses PostgreSQL for the database. Below is a high-level overview of 
 
 ---
 
-### **6. Caching and Redis**
 
-The project leverages **Redis** for caching frequently accessed data such as book details and user information. The integration with Redis helps reduce the load on the database, ensuring faster response times.
-
-To set up Redis, ensure the Redis server is running and update your Django settings to include:
-```python
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
-    }
-}
-```
-
----
-
-### **7. Testing**
+## **6. Running Tests**
 
 Tests have been written for the core functionality of the application, including user enrollment, book listing, and borrowing actions.
 
-To run tests:
+To run the tests:
 ```bash
-python manage.py test
+docker-compose exec web python manage.py test
 ```
 
 ---
 
-### **8. Deployment (Docker)**
+## **7. Deployment with Docker**
 
-The project is fully Dockerized for easy deployment. The **Docker Compose** configuration allows you to spin up the application along with PostgreSQL and Redis instances.
+The project is fully Dockerized for easy deployment. The **Docker Compose** configuration allows you to spin up the application along with PostgreSQL.
 
-#### **Docker Compose Configuration:**
-- **docker-compose.yml** contains configurations for the Django app, PostgreSQL, and Redis.
+### **Docker Compose Configuration:**
+- **docker-compose.yml** contains configurations for the Django app and PostgreSQL.
 
-#### **Steps to Deploy:**
+### **Steps to Deploy:**
 1. Build the Docker containers:
    ```bash
    docker-compose build
@@ -123,23 +137,4 @@ The project is fully Dockerized for easy deployment. The **Docker Compose** conf
 
 ---
 
-### **9. Future Scalability**
-
-In the future, the project can be scaled using:
-- **Auto-scaling on cloud platforms** such as AWS, with multiple instances managed behind a load balancer.
-- **Database replication** for PostgreSQL to handle more reads using read replicas.
-- **Horizontal scaling** using Kubernetes or Docker Swarm to add more containers as the traffic increases.
-- **Use a CDN** to offload the serving of static files and media files, reducing the load on the application servers.
-
----
-
-### **10. Contributing**
-
-If you'd like to contribute to this project, feel free to fork the repository and create a pull request. Make sure to:
-1. Write tests for any new features.
-2. Ensure the test suite passes before submitting your pull request.
-3. Follow PEP8 coding standards.
-
----
-
-This documentation should provide a clear guide for developers, admins, and contributors. If you’d like to add any other sections or modify certain areas, feel free to suggest more details!
+This README file provides a comprehensive guide for running, testing, and contributing to the project.

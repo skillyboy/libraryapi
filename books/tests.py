@@ -43,7 +43,8 @@ class UserAPITest(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, 200)
 
+class UserAPITest(APITestCase):
     def test_list_users(self):
-        url = reverse('list_users')  # Make sure 'list_users' matches the operation_id in your API
+        url = "/api/users/"  # Directly use the full path
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
